@@ -1,0 +1,75 @@
+/**
+author: myhan_Terry
+*/
+class Solution {
+    double[][] memo;
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        int n = queries.size();
+        Set<String> filter = new HashSet<>(); 
+        for (List<String> list : equations) filter.addAll(list);
+        List<String> numbers = new ArrayList<>(filter); 
+
+        int size = numbers.size();
+        Map<String, Integer> num = new HashMap<>();
+        for (String temp : numbers) num.put(temp, size--);  // mark every string
+
+        size = numbers.size();
+        memo = new double[size + 1][size + 1];
+        for (double[] tmp : memo) Arrays.fill(tmp, 0x3f3f3f3f);
+
+        List<double[]>[] g = new ArrayList[size + 1]; // create graph
+        for (int i = 0; i < g.length; ++i) g[i] = new ArrayList<>();
+        int idx = 0;
+        for (List<String> tmp : equations) {
+            int from = num.get(tmp.get(0));
+            int to = num.get(tmp.get(1));
+            g[from].add(new double[]{to, values[idx]});
+            g[to].add(new double[]{from, 1.0 / values[idx]});
+            idx++;
+        }
+
+        for (int i = 0; i < g.length; ++i) {
+            if (g[i].size() > 0) {
+                boolean[] vis = new boolean[size + 1];
+                dfs(g, i, vis); // calculate the result between any two string and store that into the memo array
+            }
+        }
+
+        double[] res = new double[n];
+        Arrays.fill(res, -1);
+        int p = 0;
+        for (List<String> query : queries) { // scan the array to fetch the result from the memo array
+            Integer from = num.get(query.get(0));
+            Integer to = num.get(query.get(1));
+            if (from == null || to == null) {
+                p++;
+            } else if (memo[from][to] != 0x3f3f3f3f) {
+                res[p++] = memo[from][to];
+            } else if (memo[to][from] != 0x3f3f3f3f) {
+                res[p++] = 1.0 / memo[to][from];
+            } else {
+                p++;
+            }
+        }
+        
+        return res;
+    }
+
+    private List<double[]> dfs(List<double[]>[] g, int index, boolean[] vis) {
+        List<double[]> res = new ArrayList<>();
+        res.add(new double[]{index, 1});
+        vis[index] = true;
+        memo[index][index] = 1;
+        for (double[] neighbours : g[index]) {
+            int neigh = (int) neighbours[0];
+            if (vis[neigh]) continue;
+            List<double[]> ret = dfs(g, neigh, vis);
+            for (double[] sons : ret) {
+                int son = (int) sons[0]; double val = sons[1];
+                memo[index][son] = neighbours[1] * val;
+                res.add(new double[]{son, memo[index][son]});
+            }
+        }
+        return res;
+    }
+}
