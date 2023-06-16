@@ -16,14 +16,14 @@ Here is an example of the directory structure:
 ```
 HashMap
 ├── 0001_Two_Sum
-│   ├── 001_Kitty_Coder.py
-│   ├── 001_Panda_Coder.cpp
-│   ├── 001_Tiger_Coder.java
+│   ├── 0001_Kitty_Coder.py
+│   ├── 0001.cpp
+│   ├── 0001_Tiger_Coder.java
 │   └── README.md
 ├── 0002_Two_Sum
-│   ├── 002_Kitty_Coder.py
-│   ├── 002_Panda_Coder.cpp
-│   ├── 002_Tiger_Coder.java
+│   ├── 0002_Kitty_Coder.py
+│   ├── 0002_Panda_Coder.cpp
+│   ├── 0002_Tiger_Coder.java
 │   └── README.md
 ├── Tree
 │   ├── 0114_Binary_Tree_Preorder_Traversal
