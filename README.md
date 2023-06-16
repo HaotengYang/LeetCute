@@ -41,4 +41,4 @@ HashMap
 
 ## Post Questions in Issues.
 
-Post your quesions as Issues. Let's dicuss it together!
+Post your questions as Issues. Let's dicuss it together!
