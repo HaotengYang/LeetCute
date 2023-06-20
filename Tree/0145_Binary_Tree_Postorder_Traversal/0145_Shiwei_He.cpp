@@ -22,8 +22,26 @@ public:
         answer.push_back(cur->val);
     }
 
-    vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> postorderTraversal1(TreeNode* root) {
         dfs(root);
         return answer;
+    }
+
+    vector<int> postorderTraversal2(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> s;
+        s.push(root);
+        
+        while(!s.empty()) {
+            TreeNode* cur = s.top();
+            s.pop();
+            if(cur != nullptr) {
+                result.push_back(cur->val);
+                s.push(cur->left);
+                s.push(cur->right);
+            }
+        }
+        reverse(result.begin(), result.end());
+        return result;
     }
 };
