@@ -39,6 +39,9 @@ build/
 */!**/src/test/**/build/
 
 ### IntelliJ IDEA ###
+.idea/
+out/
+build/
 */.idea/
 *.iws
 *.iml
